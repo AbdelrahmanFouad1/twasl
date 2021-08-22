@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twasl/layout/social_layout.dart';
+import 'package:twasl/modules/drawer/home_drawer.dart';
 import 'package:twasl/modules/login/cubit/cubit.dart';
 import 'package:twasl/modules/login/cubit/states.dart';
 import 'package:twasl/modules/register/register_screen.dart';
@@ -26,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               value: state.uId,
             ).then((value) {
               showToast(message: 'Signed in successfully', state: ToastStates.SUCCESS);
-              navigateAndFinish(context, SocialLayout());
+              navigateAndFinish(context, MyHomeDrawerPage());
             });
           }else if(state is LoginErrorStates){
             showToast(

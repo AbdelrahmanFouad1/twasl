@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twasl/layout/social_layout.dart';
+import 'package:twasl/modules/drawer/home_drawer.dart';
 import 'package:twasl/modules/login/login_screen.dart';
 import 'package:twasl/modules/on_boarding/on_boarding_screen.dart';
 import 'package:twasl/modules/splash/splash_screen.dart';
@@ -29,7 +30,7 @@ void main() async {
   uId = CacheHelper.getData(key: 'uId');
 
   if (onBoarding != null) {
-    if(uId != null) widget = SocialLayout();
+    if(uId != null) widget = MyHomeDrawerPage();
     else widget = LoginScreen();
   } else {
     widget = OnBoardingScreen();
