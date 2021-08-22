@@ -41,6 +41,7 @@ dependencies:
   rounded_loading_button: ^2.0.3
   gender_picker: ^1.1.0
   kf_drawer: ^1.2.0
+  provider: ^5.0.0
 
   #firebase
   firebase_core: ^1.5.0

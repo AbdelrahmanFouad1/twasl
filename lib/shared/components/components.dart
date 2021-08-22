@@ -151,3 +151,22 @@ void defaultSnackBar({
     ));
 
 
+Widget defaultCircularImage({
+  required double width,
+  required double height,
+  required ImageProvider image,
+}) => Container(
+  width: width,
+  height: height,
+  decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      image: DecorationImage(image: image),
+      boxShadow: [
+        BoxShadow(
+          blurRadius: 10,
+          color: Colors.black45,
+        )
+      ]),
+);
+
+

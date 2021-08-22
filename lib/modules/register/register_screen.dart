@@ -4,6 +4,7 @@ import 'package:gender_picker/gender_picker.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:intl/intl.dart';
 import 'package:twasl/layout/social_layout.dart';
+import 'package:twasl/modules/drawer/home_drawer.dart';
 import 'package:twasl/modules/register/cubit/cubit.dart';
 import 'package:twasl/modules/register/cubit/states.dart';
 import 'package:twasl/shared/components/components.dart';
@@ -39,7 +40,7 @@ class RegisterScreen extends StatelessWidget {
               value: state.uId,
             ).then((value) {
               showToast(message: 'registered successfully', state: ToastStates.SUCCESS);
-              navigateAndFinish(context, SocialLayout());
+              navigateAndFinish(context, MyHomeDrawerPage());
             });
           }
         },
