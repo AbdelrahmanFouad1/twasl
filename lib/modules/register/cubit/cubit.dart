@@ -104,7 +104,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
           bio: bio,
           uId: value.user!.uid,
       );
-      emit(RegisterFinishStates());
+      emit(RegisterFinishStates(value.user!.uid));
     }).catchError((error){
 
     });

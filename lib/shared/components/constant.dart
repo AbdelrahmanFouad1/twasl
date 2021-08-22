@@ -3,3 +3,5 @@ RegExp emailRegex = new RegExp(emailPattern);
 
 String passwordPattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 RegExp passwordRegex = new RegExp(passwordPattern);
+
+String? uId ='';
