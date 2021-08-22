@@ -18,5 +18,9 @@ class RegisterCreateErrorStates extends RegisterStates {
 
 class RegisterLoadingStates extends RegisterStates {}
 
-class RegisterFinishStates extends RegisterStates {}
+class RegisterFinishStates extends RegisterStates {
+  final String uId;
+
+  RegisterFinishStates(this.uId);
+}
 

@@ -8,6 +8,7 @@ import 'package:twasl/modules/register/cubit/cubit.dart';
 import 'package:twasl/modules/register/cubit/states.dart';
 import 'package:twasl/shared/components/components.dart';
 import 'package:twasl/shared/components/constant.dart';
+import 'package:twasl/shared/network/local/cache_helper.dart';
 import 'package:twasl/shared/style/colors.dart';
 import 'package:twasl/shared/style/iconly_broken.dart';
 
@@ -33,8 +34,13 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterCubit, RegisterStates>(
         listener: (BuildContext context, state) {
           if(state is RegisterFinishStates){
-            showToast(message: 'registered successfully', state: ToastStates.SUCCESS);
-            navigateAndFinish(context, SocialLayout());
+            CacheHelper.saveData(
+              key: 'uId',
+              value: state.uId,
+            ).then((value) {
+              showToast(message: 'registered successfully', state: ToastStates.SUCCESS);
+              navigateAndFinish(context, SocialLayout());
+            });
           }
         },
         builder: (BuildContext context, Object? state) {
