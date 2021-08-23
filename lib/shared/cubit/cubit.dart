@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:twasl/modules/add_posts/add_posts_screen.dart';
 import 'package:twasl/modules/chats/chats_screen.dart';
 import 'package:twasl/modules/feeds/feeds_screen.dart';
@@ -7,7 +10,7 @@ import 'package:twasl/modules/notifications/notifications_screen.dart';
 import 'package:twasl/modules/setting/settings_screen.dart';
 import 'package:twasl/shared/cubit/states.dart';
 
-class AppCubit extends Cubit<AppStates>{
+class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
 
   static AppCubit get(context) => BlocProvider.of(context);
@@ -25,15 +28,46 @@ class AppCubit extends Cubit<AppStates>{
   List<String> title = [
     'Feeds',
     'Chats',
-    'Post',
+    'Create Post',
     'Notifications',
     'Setting',
   ];
 
   void changeBottomNav(int index) {
-
-      currentIndex = index;
-      emit(AppChangeBottomNavState());
+    currentIndex = index;
+    emit(AppChangeBottomNavState());
   }
 
+  File? postImage;
+  var picker = ImagePicker();
+
+  Future<void> pikePostImage() async {
+   final pickedFile = await picker.getImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      postImage = File(pickedFile.path);
+      print(pickedFile.path);
+      emit(AppPostImagePickedSuccessState());
+    } else {
+      print('No image selected.');
+      emit(AppPostImagePickedErrorState());
+    }
+  }
+
+  Future<void> removePikePostImage() async {
+    // await DefaultCacheManager().emptyCache();
+
+    postImage = null;
+    emit(AppRemovePikePostImageSuccessState());
+  }
+
+  bool isTag = false;
+  String tagName = 'tag';
+  void changeTagText(){
+    isTag = !isTag;
+    tagName = isTag ? 'hide tag' : 'tag';
+    emit(AppChangeTagState());
+  }
 }
