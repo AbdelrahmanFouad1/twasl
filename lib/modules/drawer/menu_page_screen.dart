@@ -31,162 +31,182 @@ class MenuPageScreen extends StatelessWidget {
             bottom: 8,
             right: MediaQuery.of(context).size.width / 2.9),
         color: defaultColor,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(top: 60),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsetsDirectional.only(start: 30.0),
-                child: defaultCircularImage(
-                  width: 70.0,
-                  height: 70.0,
-                  image: NetworkImage(
-                      'https://as1.ftcdn.net/v2/jpg/01/71/25/36/500_F_171253635_8svqUJc0BnLUtrUOP5yOMEwFwA8SZayX.jpg'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 30.0),
+                        child: defaultCircularImage(
+                          width: 70.0,
+                          height: 70.0,
+                          image: NetworkImage(
+                              'https://as1.ftcdn.net/v2/jpg/01/71/25/36/500_F_171253635_8svqUJc0BnLUtrUOP5yOMEwFwA8SZayX.jpg'),
+                        ),
+                      ),
+                      SizedBox(height: 16,),
+                      Text(
+                        'Abd El Rahman Fouad',
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'abdofouad.cs@gmail.com',
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: Colors.grey[350],
+                          fontWeight: FontWeight.bold,
+                            height: 0.8,
+                        ),
+                      ),
+                      // SizedBox(height: 16,),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 16,),
-              Text(
-                'Abd El Rahman Fouad',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-              Text(
-                'abdofouad.cs@gmail.com',
-                style: Theme.of(context).textTheme.caption!.copyWith(
-                  color: Colors.grey[350],
-                  fontWeight: FontWeight.bold,
-                    height: 0.8,
-                ),
-              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Align(
+                alignment: AlignmentDirectional.topStart,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        onPressed: () {  },
+                        padding: EdgeInsets.zero,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                                IconBroken.Home,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                                'Home',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MaterialButton(
+                        onPressed: () {  },
+                        padding: EdgeInsets.zero,
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Chat,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              'Chats',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MaterialButton(
+                        onPressed: () {  },
+                        padding: EdgeInsets.zero,
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Heart,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              'Favourite',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MaterialButton(
+                        onPressed: () {  },
+                        padding: EdgeInsets.zero,
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Profile,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              'Profile',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      MaterialButton(
+                        onPressed: () {  },
+                        padding: EdgeInsets.zero,
+                        child: Row(
+                          children: [
+                            Icon(
+                              IconBroken.Setting,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text(
+                              'Setting',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
-
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40.0,),
-                child: Column(
-                  children: [
-                    MaterialButton(
-                      onPressed: () {  },
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                              IconBroken.Home,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text(
-                              'Home',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {  },
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        children: [
-                          Icon(
-                            IconBroken.Chat,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text(
-                            'Chats',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {  },
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        children: [
-                          Icon(
-                            IconBroken.Heart,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text(
-                            'Favourite',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {  },
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        children: [
-                          Icon(
-                            IconBroken.Profile,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text(
-                            'Profile',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    MaterialButton(
-                      onPressed: () {  },
-                      padding: EdgeInsets.zero,
-                      child: Row(
-                        children: [
-                          Icon(
-                            IconBroken.Setting,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text(
-                            'Setting',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              Spacer(),
-              MaterialButton(
-                onPressed: () {  },
-                padding: EdgeInsets.zero,
-                child: Row(
-                  children: [
-                    Icon(
-                      IconBroken.Logout,
-                      color: Colors.grey[350],
-                    ),
-                    SizedBox(width: 5.0,),
-                    Text(
-                      'Logout',
-                      style: TextStyle(
+            ),
+            // Spacer(),
+            Expanded(
+              child: Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: MaterialButton(
+                  onPressed: () {  },
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    children: [
+                      Icon(
+                        IconBroken.Logout,
                         color: Colors.grey[350],
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 5.0,),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Colors.grey[350],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

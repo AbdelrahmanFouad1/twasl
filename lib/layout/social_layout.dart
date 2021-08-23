@@ -92,6 +92,7 @@ class SocialLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
     return Stack(
       children: [
         Container(
@@ -190,7 +191,7 @@ class SocialLayout extends StatelessWidget {
                   ),
                   floatingActionButtonLocation: FloatingActionButtonLocation
                       .miniCenterDocked,
-                  floatingActionButton: Padding(
+                  floatingActionButton: keyboardIsOpened ? null : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Stack(
                         children: [
