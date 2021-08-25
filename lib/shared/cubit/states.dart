@@ -27,6 +27,40 @@ class AppCreatePostLoadingState extends AppStates {}
 
 class AppCreatePostSuccessState extends AppStates {}
 
-class AppCreatePostErrorState extends AppStates {
+class AppCreatePostErrorState extends AppStates {}
 
+class AppGetPostsLoadingState extends AppStates {}
+
+class AppGetPostsSuccessState extends AppStates {}
+
+class AppGetPostsErrorState extends AppStates {
+  final String error;
+
+  AppGetPostsErrorState(this.error);
+}
+
+class AppLikePostsSuccessState extends AppStates {}
+
+class AppLikePostsErrorState extends AppStates {
+  final String error;
+
+  AppLikePostsErrorState(this.error);
+}
+
+class AppCommentPostsLoadingState extends AppStates {}
+
+class AppCommentPostsSuccessState extends AppStates {}
+
+class AppCommentPostsErrorState extends AppStates {
+  final String error;
+
+  AppCommentPostsErrorState(this.error);
+}
+
+class AppGetCommentSuccessState extends AppStates {}
+
+class AppGetCommentErrorState extends AppStates {
+  final String error;
+
+  AppGetCommentErrorState(this.error);
 }
