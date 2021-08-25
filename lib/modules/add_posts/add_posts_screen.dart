@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:twasl/shared/components/components.dart';
 import 'package:twasl/shared/cubit/cubit.dart';
 import 'package:twasl/shared/cubit/states.dart';
 import 'package:twasl/shared/style/colors.dart';
@@ -9,21 +10,22 @@ import 'package:twasl/shared/style/iconly_broken.dart';
 class AddPostsScreen extends StatelessWidget {
 
   var textController = TextEditingController();
+  String? tags;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {},
+      listener: (BuildContext context, state) {
+        if(state is AppCreatePostSuccessState){
+          showToast(message: 'Post uploaded successfully', state: ToastStates.SUCCESS);
+        }
+      },
       builder: (BuildContext context, Object? state) {
         var cubit = AppCubit.get(context);
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              // if(state is SocialCreatePostLoadingState)
-              //   LinearProgressIndicator(),
-              // if(state is SocialCreatePostLoadingState)
-              //   SizedBox(height: 10.0,),
               Row(
                 children: [
                   CircleAvatar(
@@ -69,6 +71,19 @@ class AddPostsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  TextButton(
+                      onPressed: (){
+                        var now = DateTime.now();
+                        cubit.uploadPost(
+                            dateTime: now.toString(),
+                            body: textController.text,
+                            tags: tags,
+                        );
+                      },
+                      child: Text(
+                        'POST'
+                      ),
+                  ),
                 ],
               ),
               Expanded(
@@ -80,7 +95,7 @@ class AddPostsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(height: 10.0,),
               if(cubit.isTag == true)
                 TextFieldTags(
                 tagsStyler: TagsStyler(
@@ -104,9 +119,11 @@ class AddPostsScreen extends StatelessWidget {
                 ),
                 onDelete: (tag) {
                   print('onDelete: $tag');
+                  tags = null;
                 },
                 onTag: (tag) {
                   print('onTag: $tag');
+                  tags = tag;
                 },
                 validator: (String tag) {
                   if (tag.length > 15) {
