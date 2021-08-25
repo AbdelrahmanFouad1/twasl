@@ -23,9 +23,9 @@ class UserModel {
     required this.uId,
   });
 
-  UserModel.fromJson(Map<String, dynamic> json)
+  UserModel.fromJson(Map<String, dynamic>? json)
   {
-    fullName = json['fullName'];
+    fullName = json!['fullName'];
     email = json['email'];
     phone = json['phone'];
     birthday = json['birthday'];
