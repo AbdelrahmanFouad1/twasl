@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:twasl/models/comment_model.dart';
 import 'package:twasl/models/post_model.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/add_posts/add_posts_screen.dart';
@@ -64,6 +65,37 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
       emit(AppGetUserErrorState(error.toString()));
     });
+  }
+
+  List<PostModel> posts = [];
+  List<String> postsId = [];
+  List<int> likes = [];
+  List<int> commentsNum = [];
+  List<CommentModel> comments = [];
+
+  void getPostsData() {
+    emit(AppGetPostsLoadingState());
+
+    FirebaseFirestore.instance.collection('twaslPosts').get().then((value) {
+      value.docs.forEach((element) {
+
+        element.reference.collection('likes').get().then((value) {
+          element.reference.collection('comments').get().then((value) {
+            likes.add(value.docs.length);
+            postsId.add(element.id);
+            posts.add(PostModel.fromJson(element.data()));
+            commentsNum.add(value.docs.length);
+            emit(AppGetPostsSuccessState());
+          }).catchError((error) {});
+        }).catchError((error) {});
+
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppGetPostsErrorState(error.toString()));
+    });
+
+
   }
 
 // AddPostScreen Screen
@@ -164,5 +196,66 @@ class AppCubit extends Cubit<AppStates> {
         tags: tags,
       );
     }
+  }
+
+  //feeds screen
+  void likePost(String postId) {
+    FirebaseFirestore.instance
+        .collection('twaslPosts')
+        .doc(postId)
+        .collection("likes")
+        .doc(userModel.uId)
+        .set({
+      'like': true,
+    }).then((value) {
+      emit(AppLikePostsSuccessState());
+    }).catchError((error) {
+      emit(AppLikePostsErrorState(error.toString()));
+    });
+  }
+
+  void commentPost({
+    required String dateTime,
+    required String text,
+    required String postId,
+  }) {
+
+    emit(AppCommentPostsLoadingState());
+
+    CommentModel model = CommentModel(
+      name: userModel.fullName,
+      uId: userModel.uId,
+      image: userModel.image,
+      dateTime: dateTime,
+      text: text,
+    );
+
+    FirebaseFirestore.instance
+        .collection('twaslPosts')
+        .doc(postId)
+        .collection("comments")
+        .add(model.toMap())
+        .then((value) {
+      emit(AppCommentPostsSuccessState());
+    }).catchError((error) {
+      emit(AppCommentPostsErrorState(error.toString()));
+    });
+  }
+
+
+  void getCommentData(dynamic index){
+
+    comments.clear();
+    FirebaseFirestore.instance.collection('twaslPosts').doc(postsId[index]).collection('comments')
+        .get()
+        .then((value) {
+      commentsNum.add(value.docs.length);
+      value.docs.forEach((element) {
+        comments.add(CommentModel.fromJson(element.data()));
+        emit(AppGetCommentSuccessState());
+      });
+    }).catchError((error) {
+      emit(AppGetCommentErrorState(error.toString()));
+    });
   }
 }
