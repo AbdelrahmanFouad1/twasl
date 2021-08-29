@@ -78,7 +78,9 @@ class AddPostsScreen extends StatelessWidget {
                             dateTime: now.toString(),
                             body: textController.text,
                             tags: tags,
+                            time: DateTime.now().toString(),
                         );
+                        cubit.getPostsData();
                       },
                       child: Text(
                         'POST'

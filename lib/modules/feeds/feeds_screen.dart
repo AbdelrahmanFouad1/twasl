@@ -14,59 +14,64 @@ class FeedsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {},
-      builder: (BuildContext context, Object? state) {
-        var cubit = AppCubit.get(context);
-        return Conditional.single(
-            context: context,
-            conditionBuilder: (BuildContext context) =>  cubit.posts.length > 0 ,
-            widgetBuilder: (BuildContext context) => SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    elevation: 8.0,
-                    margin: EdgeInsets.all(8.0),
-                    child: Stack(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      children: [
-                        Image(
-                          image: NetworkImage('https://image.freepik.com/free-photo/portrait-happy-amazed-young-beautiful-lady-with-curly-dark-hair-heard-cool-news-broadly-smiling-looking-camera-pointing-with-finger-copy-space-isolated-pink-background_295783-3092.jpg'),
-                          height: 200.0,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'communicate with friends',
-                            style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: Colors.white,
+    return Builder(
+      builder: (BuildContext context) {
+        return BlocConsumer<AppCubit, AppStates>(
+          listener: (BuildContext context, state) {},
+          builder: (BuildContext context, Object? state) {
+            var cubit = AppCubit.get(context);
+            return Conditional.single(
+              context: context,
+              conditionBuilder: (BuildContext context) =>  cubit.posts.length > 0 ,
+              widgetBuilder: (BuildContext context) => SingleChildScrollView(
+                physics: BouncingScrollPhysics(
+                ),
+                child: Column(
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      elevation: 8.0,
+                      margin: EdgeInsets.all(8.0),
+                      child: Stack(
+                        alignment: AlignmentDirectional.bottomEnd,
+                        children: [
+                          Image(
+                            image: NetworkImage('https://image.freepik.com/free-photo/portrait-happy-amazed-young-beautiful-lady-with-curly-dark-hair-heard-cool-news-broadly-smiling-looking-camera-pointing-with-finger-copy-space-isolated-pink-background_295783-3092.jpg'),
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'communicate with friends',
+                              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) => buildPostItem (cubit.posts[index], context, index),
-                    separatorBuilder: ( context, index ) => SizedBox(height: 8.0,),
-                    itemCount: cubit.posts.length,
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                ],
-              ),
-            ) ,
-            fallbackBuilder: (BuildContext context) => Center(child: CircularProgressIndicator()),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => buildPostItem (cubit.posts[index], context, index),
+                      separatorBuilder: ( context, index ) => SizedBox(height: 8.0,),
+                      itemCount: cubit.posts.length,
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                  ],
+                ),
+              ) ,
+              fallbackBuilder: (BuildContext context) => Center(child: CircularProgressIndicator()),
+            );
+          },
         );
       },
     );
@@ -136,47 +141,31 @@ class FeedsScreen extends StatelessWidget {
             '${model.body}',
             style: Theme.of(context).textTheme.subtitle1,
           ),
-          // Container(
-          //   width: double.infinity,
-          //   child: Wrap(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6.0,),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             onPressed: (){},
-          //             minWidth: 1.0,
-          //             padding: EdgeInsets.zero,
-          //             child: Text(
-          //               '#Software',
-          //               style: Theme.of(context).textTheme.caption.copyWith(
-          //                 color: defaultColor,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsetsDirectional.only(end: 6.0,),
-          //         child: Container(
-          //           height: 20.0,
-          //           child: MaterialButton(
-          //             onPressed: (){},
-          //             minWidth: 1.0,
-          //             padding: EdgeInsets.zero,
-          //             child: Text(
-          //               '#Flutter',
-          //               style: Theme.of(context).textTheme.caption.copyWith(
-          //                 color: defaultColor,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          if(model.tags != '')
+          Container(
+            width: double.infinity,
+            child: Wrap(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 6.0,),
+                  child: Container(
+                    height: 20.0,
+                    child: MaterialButton(
+                      onPressed: (){},
+                      minWidth: 1.0,
+                      padding: EdgeInsets.zero,
+                      child: Text(
+                        '#${model.tags}',
+                        style: Theme.of(context).textTheme.caption!.copyWith(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           if(model.postImage != '')
             Padding(
               padding: const EdgeInsets.only(
@@ -296,6 +285,7 @@ class FeedsScreen extends StatelessWidget {
                 ),
                 onTap: (){
                   AppCubit.get(context).likePost(AppCubit.get(context).postsId[index]);
+                  AppCubit.get(context).getPostsData();
                 },
               ),
             ],
