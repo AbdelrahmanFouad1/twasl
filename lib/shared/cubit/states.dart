@@ -39,6 +39,8 @@ class AppGetPostsErrorState extends AppStates {
   AppGetPostsErrorState(this.error);
 }
 
+class AppGetChangePostsSuccessState extends AppStates {}
+
 class AppLikePostsSuccessState extends AppStates {}
 
 class AppLikePostsErrorState extends AppStates {
@@ -59,8 +61,3 @@ class AppCommentPostsErrorState extends AppStates {
 
 class AppGetCommentSuccessState extends AppStates {}
 
-class AppGetCommentErrorState extends AppStates {
-  final String error;
-
-  AppGetCommentErrorState(this.error);
-}

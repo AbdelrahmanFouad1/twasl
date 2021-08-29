@@ -41,8 +41,14 @@ class AppCubit extends Cubit<AppStates> {
   ];
 
   void changeBottomNav(int index) {
-    currentIndex = index;
-    emit(AppChangeBottomNavState());
+    if (index == 0) {
+      getPostsData();
+      currentIndex = index;
+    } else{
+      currentIndex = index;
+      emit(AppChangeBottomNavState());
+    }
+
   }
 
   //Main
@@ -76,12 +82,14 @@ class AppCubit extends Cubit<AppStates> {
   void getPostsData() {
     emit(AppGetPostsLoadingState());
 
-    FirebaseFirestore.instance.collection('twaslPosts').get().then((value) {
+    FirebaseFirestore.instance.collection('twaslPosts').orderBy('time').get().then((value) {
       value.docs.forEach((element) {
-
-        element.reference.collection('likes').get().then((value) {
+        posts = [];
+        likes =[];
+        commentsNum =[];
+        element.reference.collection('likes').get().then((value1) {
           element.reference.collection('comments').get().then((value) {
-            likes.add(value.docs.length);
+            likes.add(value1.docs.length);
             postsId.add(element.id);
             posts.add(PostModel.fromJson(element.data()));
             commentsNum.add(value.docs.length);
@@ -136,6 +144,7 @@ class AppCubit extends Cubit<AppStates> {
   void createPost({
     required String dateTime,
     required String body,
+    required String time,
     String? tags,
     String? postId,
     String? postImage,
@@ -151,6 +160,7 @@ class AppCubit extends Cubit<AppStates> {
       body: body,
       tags: tags ?? '',
       postImage: postImage ?? '',
+      time: time,
     );
 
     FirebaseFirestore.instance
@@ -166,6 +176,7 @@ class AppCubit extends Cubit<AppStates> {
   void uploadPost({
     required String dateTime,
     required String body,
+    required String time,
     String? tags,
   }) {
     emit(AppCreatePostLoadingState());
@@ -182,6 +193,7 @@ class AppCubit extends Cubit<AppStates> {
             postImage: value,
             body: body,
             tags: tags,
+            time: time,
           );
         }).catchError((error) {
           emit(AppCreatePostErrorState());
@@ -194,9 +206,11 @@ class AppCubit extends Cubit<AppStates> {
         dateTime: dateTime,
         body: body,
         tags: tags,
+        time: time,
       );
     }
   }
+
 
   //feeds screen
   void likePost(String postId) {
@@ -245,17 +259,19 @@ class AppCubit extends Cubit<AppStates> {
 
   void getCommentData(dynamic index){
 
-    comments.clear();
-    FirebaseFirestore.instance.collection('twaslPosts').doc(postsId[index]).collection('comments')
-        .get()
-        .then((value) {
-      commentsNum.add(value.docs.length);
-      value.docs.forEach((element) {
+    FirebaseFirestore.instance
+        .collection('twaslPosts')
+        .doc(postsId[index])
+        .collection('comments')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      commentsNum.add(event.docs.length);
+      comments = [];
+      event.docs.forEach((element) {
         comments.add(CommentModel.fromJson(element.data()));
         emit(AppGetCommentSuccessState());
       });
-    }).catchError((error) {
-      emit(AppGetCommentErrorState(error.toString()));
     });
   }
 }

@@ -19,64 +19,71 @@ class CommentsScreen extends StatelessWidget {
   var commentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {},
-      builder: (BuildContext context, state) {
-        var cubit = AppCubit.get(context);
-        // AppCubit()..getCommentData(postIndex);
+    return Builder(
+      builder: (BuildContext context) {
+        AppCubit.get(context).getCommentData(postIndex);
+        return BlocConsumer<AppCubit, AppStates>(
+          listener: (BuildContext context, state) {},
+          builder: (BuildContext context, state) {
+            var cubit = AppCubit.get(context);
+            // AppCubit()..getCommentData(postIndex);
 
-        return Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                  IconBroken.Arrow___Left_2
-              ),
-            ),
-            title: Text(
-                'Abdelrahman fouad and 1K comment',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            titleSpacing: 0.0,
-            actions: [
-            IconButton(
-                    onPressed: () {},
+            return Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      cubit.getPostsData();
+                    },
                     icon: Icon(
-                      IconBroken.Heart,
+                        IconBroken.Arrow___Left_2
                     ),
                   ),
-            ],
-          ),
-            body: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Comments',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => defaultComment(cubit.comments[index], context),
-                        separatorBuilder: (context, index) => SizedBox(height: 20.0,),
-                        itemCount: cubit.comments.length,
+                  title: Text(
+                    'Abdelrahman fouad and 1K comment',
+                    style: TextStyle(
+                      fontSize: 16.0,
                     ),
                   ),
-                  buildWriteComment(context),
-                ],
-              ),
-            ));
+                  titleSpacing: 0.0,
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        IconBroken.Heart,
+                      ),
+                    ),
+                  ],
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Comments',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => defaultComment(cubit.comments[index], context),
+                          separatorBuilder: (context, index) => SizedBox(height: 20.0,),
+                          itemCount: cubit.comments.length,
+                        ),
+                      ),
+                      buildWriteComment(context),
+                    ],
+                  ),
+                ));
+          },
+        );
       },
+
     );
   }
 
@@ -173,7 +180,7 @@ class CommentsScreen extends StatelessWidget {
                 text: commentController.text,
                 postId: AppCubit.get(context).postsId[postIndex],
               );
-              // commentController.text = '';
+              commentController.text = '';
             },
             minWidth: 1.0,
             child: Icon(
