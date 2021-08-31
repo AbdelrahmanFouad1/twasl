@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:twasl/models/comment_model.dart';
+import 'package:twasl/models/message_model.dart';
 import 'package:twasl/models/post_model.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/add_posts/add_posts_screen.dart';
@@ -13,8 +14,10 @@ import 'package:twasl/modules/chats/chats_screen.dart';
 import 'package:twasl/modules/feeds/feeds_screen.dart';
 import 'package:twasl/modules/notifications/notifications_screen.dart';
 import 'package:twasl/modules/setting/settings_screen.dart';
+import 'package:twasl/modules/user_chats/userChatsScreen.dart';
 import 'package:twasl/shared/components/constant.dart';
 import 'package:twasl/shared/cubit/states.dart';
+import 'package:twasl/shared/network/local/cache_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -26,7 +29,7 @@ class AppCubit extends Cubit<AppStates> {
 
   List<Widget> screen =[
     FeedsScreen(),
-    ChatsScreen(),
+    UserChatsScreen(),
     AddPostsScreen(),
     NotificationsScreen(),
     SettingsScreen(),
@@ -44,6 +47,10 @@ class AppCubit extends Cubit<AppStates> {
     if (index == 0) {
       getPostsData();
       currentIndex = index;
+    }
+    if (index == 1) {
+      getAllUser();
+      currentIndex = index;
     } else{
       currentIndex = index;
       emit(AppChangeBottomNavState());
@@ -57,12 +64,13 @@ class AppCubit extends Cubit<AppStates> {
   void getUserData() {
     emit(AppGetUserLoadingState());
 
+    uId = CacheHelper.getData(key: 'uId');
     FirebaseFirestore.instance
         .collection('twaslUsers')
         .doc(uId)
         .get()
         .then((value) {
-      // print(value.data());
+      print('prinnnnnnnnt$uId');
       userModel = UserModel.fromJson(value.data());
       // profileImage = null;
       // coverImage = null;
@@ -274,4 +282,88 @@ class AppCubit extends Cubit<AppStates> {
       });
     });
   }
+
+  //UserChatsScreen
+
+  List<UserModel> user = [];
+  void getAllUser() {
+    if (user.length == 0)
+      FirebaseFirestore.instance.collection('twaslUsers').get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data()['uId'] != userModel.uId)
+            user.add(UserModel.fromJson(element.data()));
+        });
+        emit(AppGetPostsSuccessState());
+      }).catchError((error) {
+        print(error.toString());
+        emit(AppGetPostsErrorState(error.toString()));
+      });
+  }
+
+  //ChatsScreen
+  void sendMessage({
+    required String receiverId,
+    required String dateTime,
+    required String text,
+    String? image,
+  }) {
+    MessageModel model = MessageModel(
+        senderId: userModel.uId,
+        receiverId: receiverId,
+        dateTime: dateTime,
+        text: text,
+        image: image ?? '',
+    );
+
+    // set my chats
+    FirebaseFirestore.instance
+        .collection('twaslUsers')
+        .doc(userModel.uId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(AppSendMessageSuccessState());
+    }).catchError((error) {
+      emit(AppSendMessageErrorState());
+    });
+
+    // set receiver chats
+    FirebaseFirestore.instance
+        .collection('twaslUsers')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(userModel.uId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(AppSendMessageSuccessState());
+    }).catchError((error) {
+      emit(AppSendMessageErrorState());
+    });
+  }
+
+  List<MessageModel> message = [];
+
+  void getMessage({
+    required String receiverId,
+  }) {
+    FirebaseFirestore.instance
+        .collection('twaslUsers')
+        .doc(userModel.uId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      message = [];
+      event.docs.forEach((element) {
+        message.add(MessageModel.fromJson(element.data()));
+      });
+      emit(AppGetMessagesSuccessState());
+    });
+  }
+
 }

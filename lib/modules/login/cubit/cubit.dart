@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:twasl/modules/login/cubit/states.dart';
+import 'package:twasl/shared/components/constant.dart';
+import 'package:twasl/shared/network/local/cache_helper.dart';
 
 class LoginCubit extends Cubit<LoginStates>{
   LoginCubit() : super(LoginInitialState());
@@ -41,6 +43,7 @@ class LoginCubit extends Cubit<LoginStates>{
         password: password
     ).then((value) {
       // print(value.user!.uid);
+      CacheHelper.saveData(key: 'uId', value: value.user!.uid) ;
       emit(LoginSuccessStates(value.user!.uid));
     }).catchError((error){
       emit(LoginErrorStates(error.toString()));

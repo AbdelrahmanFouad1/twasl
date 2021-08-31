@@ -20,6 +20,15 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       (route) => false,
 );
 
+Widget myDivider() => Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+  child: Container(
+    width: double.infinity,
+    height: 1.0,
+    color: Colors.grey[300],
+  ),
+);
+
 // FocusNode myFocusNode = new FocusNode();
 Widget defaultTextField({
   required TextEditingController controller,

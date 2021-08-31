@@ -61,3 +61,13 @@ class AppCommentPostsErrorState extends AppStates {
 
 class AppGetCommentSuccessState extends AppStates {}
 
+class AppSendMessageSuccessState extends AppStates {}
+
+class AppSendMessageErrorState extends AppStates {
+
+}
+
+class AppGetMessagesSuccessState extends AppStates {}
+
+
+
