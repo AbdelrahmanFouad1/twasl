@@ -71,8 +71,7 @@ class AppCubit extends Cubit<AppStates> {
         .get()
         .then((value) {
       userModel = UserModel.fromJson(value.data());
-      // profileImage = null;
-      // coverImage = null;
+
       emit(AppGetUserSuccessState());
     }).catchError((error) {
       print(error.toString());
