@@ -7,7 +7,7 @@ class PostModel {
   late String dateTime;
   late String body;
   late String tags;
-  late String time;
+  late var time;
 
   PostModel({
     required this.name,

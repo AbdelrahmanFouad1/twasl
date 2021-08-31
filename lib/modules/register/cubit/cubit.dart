@@ -9,6 +9,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/register/cubit/states.dart';
 import 'package:twasl/shared/components/components.dart';
+import 'package:twasl/shared/network/local/cache_helper.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit() : super(RegisterInitialState());
@@ -104,6 +105,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
           bio: bio,
           uId: value.user!.uid,
       );
+      CacheHelper.saveData(key: 'uId', value: value.user!.uid) ;
+
       emit(RegisterFinishStates(value.user!.uid));
     }).catchError((error){
 
