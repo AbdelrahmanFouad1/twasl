@@ -49,6 +49,7 @@ class AppCubit extends Cubit<AppStates> {
       currentIndex = index;
     }
     if (index == 1) {
+      getPostsData();
       getAllUser();
       currentIndex = index;
     } else{
@@ -70,10 +71,8 @@ class AppCubit extends Cubit<AppStates> {
         .doc(uId)
         .get()
         .then((value) {
-      print('prinnnnnnnnt$uId');
       userModel = UserModel.fromJson(value.data());
-      // profileImage = null;
-      // coverImage = null;
+
       emit(AppGetUserSuccessState());
     }).catchError((error) {
       print(error.toString());
@@ -290,7 +289,7 @@ class AppCubit extends Cubit<AppStates> {
     if (user.length == 0)
       FirebaseFirestore.instance.collection('twaslUsers').get().then((value) {
         value.docs.forEach((element) {
-          if (element.data()['uId'] != userModel.uId)
+          if (element.data()['uId'] != uId)
             user.add(UserModel.fromJson(element.data()));
         });
         emit(AppGetPostsSuccessState());

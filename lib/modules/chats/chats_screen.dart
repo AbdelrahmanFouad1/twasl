@@ -10,9 +10,9 @@ import 'package:twasl/shared/style/colors.dart';
 import 'package:twasl/shared/style/iconly_broken.dart';
 
 class ChatsScreen extends StatelessWidget {
-  UserModel? userModel;
+  UserModel userModel;
 
-  ChatsScreen({this.userModel});
+  ChatsScreen({required this.userModel});
 
   var messageController = TextEditingController();
 
@@ -21,12 +21,11 @@ class ChatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (BuildContext context) {
-        AppCubit.get(context).getMessage(
-          receiverId: userModel!.uId,
-        );
+
         return BlocConsumer<AppCubit, AppStates>(
           listener: (BuildContext context, state) {},
           builder: (BuildContext context, state) {
+            AppCubit.get(context).getMessage(receiverId: userModel.uId,);
             return Scaffold(
               appBar: AppBar(
                 titleSpacing: 0.0,
@@ -40,11 +39,11 @@ class ChatsScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 18.0,
-                      backgroundImage: NetworkImage('${userModel!.image}'),
+                      backgroundImage: NetworkImage('${userModel.image}'),
                     ),
                     SizedBox(width: 10.0),
                     Text(
-                      '${userModel!.fullName}',
+                      '${userModel.fullName}',
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1!
@@ -234,7 +233,7 @@ class ChatsScreen extends StatelessWidget {
               child: MaterialButton(
                 onPressed: () {
                   AppCubit.get(context).sendMessage(
-                    receiverId: userModel!.uId,
+                    receiverId: userModel.uId,
                     dateTime: DateTime.now().toString(),
                     text: messageController.text,
                   );
