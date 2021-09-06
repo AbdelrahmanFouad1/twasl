@@ -30,7 +30,7 @@ class AddPostsScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 25.0,
-                    backgroundImage: NetworkImage('https://image.freepik.com/free-photo/young-man-trendy-denim-shirt-looks-inspired-holds-his-index-finger-upwards-looking-front_295783-1649.jpg'),
+                    backgroundImage: NetworkImage('${cubit.userModel.image}'),
                   ),
                   SizedBox(width: 15.0),
                   Expanded(
@@ -40,7 +40,7 @@ class AddPostsScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Abdelrahman Fouad',
+                              '${cubit.userModel.fullName}',
                               style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                   height: 1.4
                               ),
