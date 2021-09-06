@@ -49,6 +49,7 @@ class AppCubit extends Cubit<AppStates> {
       currentIndex = index;
     }
     if (index == 1) {
+      getPostsData();
       getAllUser();
       currentIndex = index;
     } else{
