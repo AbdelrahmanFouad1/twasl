@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:twasl/modules/login/login_screen.dart';
 import 'package:twasl/shared/components/components.dart';
@@ -113,7 +112,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   controller: boardController,
                   count: boarding.length,
                   effect: ExpandingDotsEffect(
-                    dotColor: HexColor("#FFBDBDBD"),
+                    dotColor: Colors.white30,
                     activeDotColor: defaultColor,
                     dotHeight: 8,
                     expansionFactor: 2.5,
