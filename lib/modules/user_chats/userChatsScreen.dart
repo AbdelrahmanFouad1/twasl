@@ -33,7 +33,7 @@ class UserChatsScreen extends StatelessWidget {
       },
     );
   }
-
+//
   Widget buildChatUser(UserModel model, context) => InkWell(
         onTap: () {
           navigateTo(context, ChatsScreen(userModel: model,));
