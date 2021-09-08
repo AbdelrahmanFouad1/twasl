@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/chats/chats_screen.dart';
 import 'package:twasl/shared/components/components.dart';
 import 'package:twasl/shared/cubit/cubit.dart';
 import 'package:twasl/shared/cubit/states.dart';
+import 'package:twasl/shared/style/colors.dart';
 
 class UserChatsScreen extends StatelessWidget {
   @override
@@ -20,14 +22,13 @@ class UserChatsScreen extends StatelessWidget {
           widgetBuilder: (BuildContext context) {
               return ListView.separated(
                 physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    buildChatUser(cubit.user[index], context),
+                itemBuilder: (context, index) => buildChatUser(cubit.user[index], context),
                 separatorBuilder: (context, index) => myDivider(),
                 itemCount: AppCubit
                     .get(context).user.length,
               );
             },
-            fallbackBuilder: (context) => Center(child: CircularProgressIndicator()),
+            fallbackBuilder: (context) => buildShimmerChatUser(context),
         );
       },
     );
@@ -57,4 +58,57 @@ class UserChatsScreen extends StatelessWidget {
           ),
         ),
       );
+
+  Widget buildShimmerChatUser( context) =>
+      ListView.separated(
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index)  => Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Shimmer.fromColors(
+              highlightColor: highlightColor,
+              baseColor: baseColor,
+              child: CircleAvatar(
+                radius: 25.0,
+                backgroundColor: baseColor,
+              ),
+            ),
+            SizedBox(width: 15.0),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Shimmer.fromColors(
+                      child: Container(
+                        height: 14.0,
+                        width: double.infinity,
+                        color: baseColor,
+                      ),
+                      baseColor: baseColor,
+                      highlightColor:highlightColor,
+                    ),
+                    SizedBox(height: 2.0,),
+                    Shimmer.fromColors(
+                      child: Container(
+                        height: 14.0,
+                        width: double.infinity,
+                        color: baseColor,
+                      ),
+                      baseColor: baseColor,
+                      highlightColor:highlightColor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      separatorBuilder: (context, index) =>  myDivider(),
+      itemCount: 8,
+  );
 }
