@@ -33,7 +33,7 @@ class CommentsScreen extends StatelessWidget {
                   leading: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      cubit.getPostsData();
+                      cubit.getAllPostsData();
                     },
                     icon: Icon(
                         IconBroken.Arrow___Left_2

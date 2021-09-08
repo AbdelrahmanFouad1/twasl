@@ -29,6 +29,16 @@ class AppCreatePostSuccessState extends AppStates {}
 
 class AppCreatePostErrorState extends AppStates {}
 
+class AppGetAllPostsLoadingState extends AppStates {}
+
+class AppGetAllPostsSuccessState extends AppStates {}
+
+class AppGetAllPostsErrorState extends AppStates {
+  final String error;
+
+  AppGetAllPostsErrorState(this.error);
+}
+
 class AppGetPostsLoadingState extends AppStates {}
 
 class AppGetPostsSuccessState extends AppStates {}

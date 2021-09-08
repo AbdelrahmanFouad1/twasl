@@ -200,7 +200,7 @@ class ChatsScreen extends StatelessWidget {
   Widget buildSendMessageField(context) => Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: gray300,
+            color: Colors.white54,
             width: 1.0,
           ),
           borderRadius: BorderRadius.circular(

@@ -45,14 +45,19 @@ class AppCubit extends Cubit<AppStates> {
 
   void changeBottomNav(int index) {
     if (index == 0) {
-      getPostsData();
+      getAllPostsData();
       currentIndex = index;
     }
-    if (index == 1) {
-      getPostsData();
+    else if (index == 1) {
+      getAllPostsData();
       getAllUser();
       currentIndex = index;
-    } else{
+    }
+    else if (index == 4) {
+      getAllPostsData();
+      currentIndex = index;
+    }
+    else{
       currentIndex = index;
       emit(AppChangeBottomNavState());
     }
@@ -86,8 +91,8 @@ class AppCubit extends Cubit<AppStates> {
   List<int> commentsNum = [];
   List<CommentModel> comments = [];
 
-  void getPostsData() {
-    emit(AppGetPostsLoadingState());
+  void getAllPostsData() {
+    emit(AppGetAllPostsLoadingState());
 
     FirebaseFirestore.instance.collection('twaslPosts').orderBy('time').get().then((value) {
       value.docs.forEach((element) {
@@ -100,14 +105,14 @@ class AppCubit extends Cubit<AppStates> {
             postsId.add(element.id);
             posts.add(PostModel.fromJson(element.data()));
             commentsNum.add(value.docs.length);
-            emit(AppGetPostsSuccessState());
+            emit(AppGetAllPostsSuccessState());
           }).catchError((error) {});
         }).catchError((error) {});
 
       });
     }).catchError((error) {
       print(error.toString());
-      emit(AppGetPostsErrorState(error.toString()));
+      emit(AppGetAllPostsErrorState(error.toString()));
     });
 
 
@@ -365,4 +370,40 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  //Setting Screen
+
+  void getPostsData() {
+    emit(AppGetPostsLoadingState());
+
+    FirebaseFirestore.instance.collection('twaslPosts').orderBy('time').get().then((value) {
+      value.docs.forEach((element) {
+        posts = [];
+        likes =[];
+        commentsNum =[];
+        element.reference.collection('likes').get().then((value1) {
+          element.reference.collection('comments').get().then((value) {
+            likes.add(value1.docs.length);
+            postsId.add(element.id);
+            posts.add(PostModel.fromJson(element.data()));
+            commentsNum.add(value.docs.length);
+            emit(AppGetPostsSuccessState());
+          }).catchError((error) {});
+        }).catchError((error) {});
+
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppGetPostsErrorState(error.toString()));
+    });
+
+
+  }
 }
+
+
+// default background
+// https://image.freepik.com/free-photo/greenery-product-background_53876-90824.jpg
+
+// default profile image
+// https://as1.ftcdn.net/v2/jpg/01/71/25/36/500_F_171253635_8svqUJc0BnLUtrUOP5yOMEwFwA8SZayX.jpg
+// https://as2.ftcdn.net/v2/jpg/02/17/34/67/500_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg
