@@ -10,11 +10,10 @@ import 'package:twasl/models/message_model.dart';
 import 'package:twasl/models/post_model.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/add_posts/add_posts_screen.dart';
-import 'package:twasl/modules/chats/chats_screen.dart';
+import 'package:twasl/modules/all_user_chats/all_user_chats_screen.dart';
 import 'package:twasl/modules/feeds/feeds_screen.dart';
-import 'package:twasl/modules/notifications/notifications_screen.dart';
 import 'package:twasl/modules/setting/settings_screen.dart';
-import 'package:twasl/modules/user_chats/userChatsScreen.dart';
+import 'package:twasl/modules/all_users/all_users_screen.dart';
 import 'package:twasl/shared/components/constant.dart';
 import 'package:twasl/shared/cubit/states.dart';
 import 'package:twasl/shared/network/local/cache_helper.dart';
@@ -29,9 +28,9 @@ class AppCubit extends Cubit<AppStates> {
 
   List<Widget> screen =[
     FeedsScreen(),
-    UserChatsScreen(),
+    AllUserChatsScreen(),
     AddPostsScreen(),
-    NotificationsScreen(),
+    AllUsersScreen(),
     SettingsScreen(),
   ];
 
@@ -39,28 +38,13 @@ class AppCubit extends Cubit<AppStates> {
     'Feeds',
     'Chats',
     'Create Post',
-    'Notifications',
+    'Users',
     'Setting',
   ];
 
   void changeBottomNav(int index) {
-    if (index == 0) {
-      getAllPostsData();
-      currentIndex = index;
-    }
-    else if (index == 1) {
-      getAllPostsData();
-      getAllUser();
-      currentIndex = index;
-    }
-    else if (index == 4) {
-      getAllPostsData();
-      currentIndex = index;
-    }
-    else{
       currentIndex = index;
       emit(AppChangeBottomNavState());
-    }
 
   }
 

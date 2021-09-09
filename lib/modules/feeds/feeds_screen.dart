@@ -97,51 +97,6 @@ class FeedsScreen extends StatelessWidget {
                     buildPostShimmerItem (context),
                   ],
                 ),
-                  // SingleChildScrollView(
-                  //   physics: BouncingScrollPhysics(),
-                  //   child: Column(
-                  //     children: [
-                  //       Card(
-                  //         clipBehavior: Clip.antiAliasWithSaveLayer,
-                  //         elevation: 8.0,
-                  //         margin: EdgeInsets.all(8.0),
-                  //         child: Stack(
-                  //           alignment: AlignmentDirectional.bottomEnd,
-                  //           children: [
-                  //             Image(
-                  //               image: NetworkImage('https://image.freepik.com/free-photo/portrait-happy-amazed-young-beautiful-lady-with-curly-dark-hair-heard-cool-news-broadly-smiling-looking-camera-pointing-with-finger-copy-space-isolated-pink-background_295783-3092.jpg'),
-                  //               height: 200.0,
-                  //               fit: BoxFit.cover,
-                  //               width: double.infinity,
-                  //             ),
-                  //             Padding(
-                  //               padding: const EdgeInsets.all(8.0),
-                  //               child: Text(
-                  //                 'communicate with friends',
-                  //                 style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                  //                   color: Colors.white,
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       SizedBox(
-                  //         height: 8.0,
-                  //       ),
-                  //       ListView.separated(
-                  //         shrinkWrap: true,
-                  //         physics: BouncingScrollPhysics(),
-                  //         itemBuilder: (context, index) => buildPostItem (cubit.posts[index], context, index),
-                  //         separatorBuilder: ( context, index ) => SizedBox(height: 8.0,),
-                  //         itemCount: cubit.posts.length,
-                  //       ),
-                  //       SizedBox(
-                  //         height: 8.0,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // )
               );
             },
           ),

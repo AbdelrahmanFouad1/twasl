@@ -125,10 +125,6 @@ class SocialLayout extends StatelessWidget {
                         onPressed: () {},
                         icon: Icon(IconBroken.Notification),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(IconBroken.Search),
-                      ),
                     ],
                   ),
                   body: cubit.screen[cubit.currentIndex],
@@ -174,8 +170,8 @@ class SocialLayout extends StatelessWidget {
                                 // title: Text(''),
                               ),
                               BottomNavigationBarItem(
-                                icon: Icon(IconBroken.Heart),
-                                label: 'Notification',
+                                icon: Icon(IconBroken.User),
+                                label: 'Users',
                                 // title: Text('Notification',style: TextStyle(fontSize: 14.0),),
                               ),
                               BottomNavigationBarItem(
