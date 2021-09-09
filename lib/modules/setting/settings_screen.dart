@@ -108,7 +108,7 @@ class SettingsScreen extends StatelessWidget {
                           Expanded(
                             child: OutlinedButton(
                               onPressed: () {},
-                              child: Text('Add Photo'),
+                              child: Text('Add Posts'),
                             ),
                           ),
                           SizedBox(

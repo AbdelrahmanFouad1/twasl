@@ -4,39 +4,43 @@ import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart
 import 'package:shimmer/shimmer.dart';
 import 'package:twasl/models/user_model.dart';
 import 'package:twasl/modules/chats/chats_screen.dart';
+import 'package:twasl/modules/users/users_screen.dart';
 import 'package:twasl/shared/components/components.dart';
 import 'package:twasl/shared/cubit/cubit.dart';
 import 'package:twasl/shared/cubit/states.dart';
 import 'package:twasl/shared/style/colors.dart';
 
-class UserChatsScreen extends StatelessWidget {
+class AllUsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, state) {},
-      builder: (BuildContext context, state) {
-        var cubit = AppCubit.get(context);
-        return Conditional.single(
-          context: context,
-          conditionBuilder: (BuildContext context) => cubit.user.length > 0,
-          widgetBuilder: (BuildContext context) {
-              return ListView.separated(
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) => buildChatUser(cubit.user[index], context),
-                separatorBuilder: (context, index) => myDivider(),
-                itemCount: AppCubit
-                    .get(context).user.length,
-              );
-            },
-            fallbackBuilder: (context) => buildShimmerChatUser(context),
-        );
-      },
+    return BlocProvider(
+      create: (BuildContext context)  => AppCubit()..getAllPostsData()..getAllUser(),
+      child: BlocConsumer<AppCubit, AppStates>(
+        listener: (BuildContext context, state) {},
+        builder: (BuildContext context, state) {
+          var cubit = AppCubit.get(context);
+          return Conditional.single(
+            context: context,
+            conditionBuilder: (BuildContext context) => cubit.user.length > 0,
+            widgetBuilder: (BuildContext context) {
+                return ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => buildChatUser(cubit.user[index], context),
+                  separatorBuilder: (context, index) => myDivider(),
+                  itemCount: AppCubit
+                      .get(context).user.length,
+                );
+              },
+              fallbackBuilder: (context) => buildShimmerChatUser(context),
+          );
+        },
+      ),
     );
   }
 //
   Widget buildChatUser(UserModel model, context) => InkWell(
         onTap: () {
-          navigateTo(context, ChatsScreen(userModel: model,));
+          navigateTo(context, UserScreen());
         },
         child: Padding(
           padding: const EdgeInsets.all(20.0),
